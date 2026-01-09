@@ -38,10 +38,10 @@ class OnlineSalesRegisterCollector:
         for item in self.__name_items:
             total.append(self.__item_price.get(item))
 
+        total = sum(total)
+
         if self.__number_items > 10:
-            total = sum(total) * 0.9
-        else:
-            total = sum(total)
+            total *= 0.9
         return total
 
     def twenty_percent_tax_calculation(self):
@@ -52,10 +52,10 @@ class OnlineSalesRegisterCollector:
                 twenty_percent_tax.append(item)
                 total.append(self.__item_price.get(item))
 
+        total = sum(total) * 0.2
+
         if self.__number_items > 10:
-            total = sum(total) * 0.9 * 0.2
-        else:
-            total = sum(total) * 0.2
+            total *= 0.9
         return total
 
     def ten_percent_tax_calculation(self):
@@ -66,11 +66,23 @@ class OnlineSalesRegisterCollector:
                 ten_percent_tax.append(item)
                 total.append(self.__item_price.get(item))
 
+        total = sum(total) * 0.1
+
         if self.__number_items > 10:
-            total = sum(total) * 0.9 * 0.1
-        else:
-            total = sum(total) * 0.1
+            total *= 0.9
         return total
 
     def total_tax(self):
         return self.twenty_percent_tax_calculation() + self.ten_percent_tax_calculation()
+
+    @staticmethod
+    def get_telephone_number(telephone_number):
+        telephone_number = str(telephone_number)
+
+        if not telephone_number.isdigit():
+            raise ValueError('Необходимо ввести цифры')
+
+        if len(telephone_number) != 10:
+            raise ValueError('Необходимо ввести 10 цифр после "+7"')
+
+        return f'+7{telephone_number}'
